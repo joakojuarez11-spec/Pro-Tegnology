@@ -25,3 +25,34 @@ export const AdminPage = () => {
     </ProtectedRoute>
   );
 };
+
+const AdminContent = () => {
+  const [activeTab, setActiveTab] = useState<'productos' | 'usuarios'>('productos');
+
+  return (
+    <div className="page">
+      <div className="page-header">
+        <span className="page-header-badge">Panel de administración</span>
+        <h1 className="page-title">Admin</h1>
+        <p className="page-subtitle">Gestioná productos y usuarios del sistema</p>
+      </div>
+
+      <div className="admin-tabs">
+        <button
+          className={`admin-tab ${activeTab === 'productos' ? 'active' : ''}`}
+          onClick={() => setActiveTab('productos')}
+        >
+          <Package size={16} /> Productos
+        </button>
+        <button
+          className={`admin-tab ${activeTab === 'usuarios' ? 'active' : ''}`}
+          onClick={() => setActiveTab('usuarios')}
+        >
+          <Users size={16} /> Usuarios
+        </button>
+      </div>
+
+      {activeTab === 'productos' ? <ProductosTab /> : <UsuariosTab />}
+    </div>
+  );
+};
