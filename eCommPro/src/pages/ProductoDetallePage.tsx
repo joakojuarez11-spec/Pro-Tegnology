@@ -1,7 +1,7 @@
 
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, ArrowLeft, Heart } from 'lucide-react';
-import { useProductos } from '../context/ProductosContext';
+import { useProductos } from '../context/ProductContext';
 import { useCarrito } from '../context/CarritoContext';
 import { useDeseos } from '../context/DeseosContext';
 import { useAuth } from '../context/AuthContext';
