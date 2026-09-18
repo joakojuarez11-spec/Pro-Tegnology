@@ -264,3 +264,64 @@ const ProductosTab = () => {
     </div>
   );
 };
+
+const UsuariosTab = () => {
+  const { user: currentUser } = useAuth();
+  const [users, setUsers] = useState(authService.getAllUsers());
+
+  const handleDelete = (id: number, nombre: string) => {
+    if (id === currentUser?.id) {
+      alert('No podés eliminarte a vos mismo');
+      return;
+    }
+    if (window.confirm(`¿Eliminar al usuario "${nombre}"?`)) {
+      authService.deleteUser(id);
+      setUsers(authService.getAllUsers());
+    }
+  };
+
+  return (
+    <div className="admin-section">
+      <div className="admin-section-header">
+        <h2>Usuarios registrados</h2>
+      </div>
+
+      <div className="admin-table-wrapper">
+        <table className="admin-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Rol</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            {users.map((u: { id: number; nombre: string; email: string; role: string }) => (
+              <tr key={u.id}>
+                <td>{u.id}</td>
+                <td>{u.nombre}</td>
+                <td>{u.email}</td>
+                <td>
+                  <span className={`role-badge ${u.role === 'admin' ? 'admin' : 'user'}`}>
+                    {u.role === 'admin' ? 'Administrador' : 'Usuario'}
+                  </span>
+                </td>
+                <td className="admin-actions">
+                  <button
+                    className="admin-btn-delete"
+                    onClick={() => handleDelete(u.id, u.nombre)}
+                    disabled={u.id === currentUser?.id}
+                  >
+                    <Trash2 size={14} /> Eliminar
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
