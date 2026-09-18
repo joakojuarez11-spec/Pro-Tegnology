@@ -29,3 +29,60 @@ export const useProductos = () => {
   }
   return context;
 };
+
+
+export const ProductosProvider = ({ children }: { children: ReactNode }) => {
+  const [productos, setProductos] = useState<Producto[]>([]);
+  const [categorias, setCategorias] = useState<Categoria[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loaded = productoService.getAll();
+    const cats = productoService.getCategories();
+    setProductos(loaded);
+    setCategorias(cats);
+    setLoading(false);
+  }, []);
+
+  const getById = (id: string) => {
+    return productoService.getById(id);
+  };
+
+  const getByCategory = (slug: string) => {
+    return productoService.getByCategory(slug);
+  };
+
+  const getDestacados = () => {
+    return productoService.getDestacados();
+  };
+
+  const search = (query: string) => {
+    return productoService.search(query);
+  };
+
+  const addProduct = (product: Omit<Producto, 'id'>) => {
+    const newProduct = productoService.addProduct(product);
+    setProductos(productoService.getAll());
+    return newProduct;
+  };
+
+  const updateProduct = (id: number, data: Partial<Producto>) => {
+    productoService.updateProduct(id, data);
+    setProductos(productoService.getAll());
+  };
+
+  const deleteProduct = (id: number) => {
+    productoService.deleteProduct(id);
+    setProductos(productoService.getAll());
+  };
+
+  const refreshProductos = () => {
+    setProductos(productoService.getAll());
+  };
+
+  return (
+    <ProductosContext.Provider value={{ productos, categorias, loading, getById, getByCategory, getDestacados, search, addProduct, updateProduct, deleteProduct, refreshProductos }}>
+      {children}
+    </ProductosContext.Provider>
+  );
+};
