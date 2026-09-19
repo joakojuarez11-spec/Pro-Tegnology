@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { useProductos } from '../context/ProductosContext';
-import type { Producto } from '../context/ProductosContext';
+import { useProductos } from '../context/ProductContext';
+import type { Producto } from '../context/ProductContext';
 import { ProtectedRoute } from '../components/ProtectedRoute';
 import { Modal } from '../components/Modal';
 import { useForm } from 'react-hook-form';
