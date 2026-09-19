@@ -30,7 +30,6 @@ export const useProductos = () => {
   return context;
 };
 
-
 export const ProductosProvider = ({ children }: { children: ReactNode }) => {
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
