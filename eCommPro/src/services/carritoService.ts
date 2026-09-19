@@ -1,8 +1,11 @@
 const STORAGE_KEY = 'carrito';
 
+import { getProductoImage } from './productoService';
+
 interface Producto {
   id: number;
   name: string;
+  image: string;
   category: string;
   categoryLabel: string;
   price: number;
@@ -13,6 +16,7 @@ interface Producto {
 export interface CarritoItem {
   id: number;
   name: string;
+  image: string;
   category: string;
   price: number;
   priceFormatted: string;
@@ -22,7 +26,12 @@ export interface CarritoItem {
 
 export const getItems = (): CarritoItem[] => {
   const stored = localStorage.getItem(STORAGE_KEY);
-  return stored ? JSON.parse(stored) : [];
+  if (!stored) return [];
+  const items: CarritoItem[] = JSON.parse(stored);
+  return items.map(item => ({
+    ...item,
+    image: item.image || getProductoImage(item.id)
+  }));
 };
 
 export const addItem = (producto: Producto, cantidad: number = 1): CarritoItem[] => {
@@ -35,6 +44,7 @@ export const addItem = (producto: Producto, cantidad: number = 1): CarritoItem[]
     items.push({
       id: producto.id,
       name: producto.name,
+      image: producto.image,
       category: producto.categoryLabel,
       price: producto.price,
       priceFormatted: producto.priceFormatted,

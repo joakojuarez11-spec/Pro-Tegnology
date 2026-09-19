@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Trash2, Plus, Minus, ArrowLeft } from 'lucide-react';
 import { useCarrito } from '../context/CarritoContext';
@@ -37,7 +36,7 @@ export const CarritoPage = () => {
           {items.map((item) => (
             <div key={item.id} className="carrito-item">
               <div className={`carrito-item-image ${item.imageBg}`}>
-                <span className="product-card-category-icon">[ {item.category} ]</span>
+                <img src={item.image} alt={item.name} />
               </div>
               <div className="carrito-item-info">
                 <div className="carrito-item-name">{item.name}</div>
@@ -77,7 +76,7 @@ export const CarritoPage = () => {
             <span>Total</span>
             <span className="price">{formatPrice(total)}</span>
           </div>
-          <button className="btn btn-pink" style={{ width: '100%', marginTop: '16px' }}>
+          <button className="btn btn-pink" style={{ width: '100%', marginTop: '16px' }} onClick={() => navigate('/finalizar-compra')}>
             Finalizar compra
           </button>
         </div>
