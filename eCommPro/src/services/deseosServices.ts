@@ -14,3 +14,14 @@ export const addDeseo = (userId: number, productId: number): void => {
     localStorage.setItem(key, JSON.stringify(deseos));
   }
 };
+
+export const removeDeseo = (userId: number, productId: number): void => {
+  const key = getDeseosKey(userId);
+  const deseos = getDeseos(userId).filter(id => id !== productId);
+  localStorage.setItem(key, JSON.stringify(deseos));
+};
+
+export const isInDeseos = (userId: number, productId: number): boolean => {
+  const deseos = getDeseos(userId);
+  return deseos.includes(productId);
+};
