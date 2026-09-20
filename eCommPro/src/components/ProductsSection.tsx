@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Eye } from 'lucide-react';
 import { useCarrito } from '../context/CarritoContext';
-import { useProductos } from '../context/ProductContext';
-import type { Producto } from '../context/ProductContext';
+import { useProductos } from '../context/ProductosContext';
+import type { Producto } from '../context/ProductosContext';
 
 export const ProductsSection: React.FC = () => {
   const { addItem } = useCarrito();
