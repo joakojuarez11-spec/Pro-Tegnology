@@ -26,3 +26,17 @@
     padding: 32px 16px;
   }
 }
+
+.hero-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+@media (max-width: 768px) {
+  .hero-main {
+    flex-direction: column;
+    gap: 32px;
+  }
+}
