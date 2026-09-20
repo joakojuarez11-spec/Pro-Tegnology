@@ -6,6 +6,9 @@ import { useAuth } from './AuthContext';
 
 interface DeseosContextType {
   deseos: number[];
+  addDeseo: (productId: number) => void;
+  removeDeseo: (productId: number) => void;
+  isInDeseos: (productId: number) => boolean;
 }
 
 const DeseosContext = createContext<DeseosContextType | null>(null);
@@ -30,9 +33,25 @@ export const DeseosProvider = ({ children }: { children: ReactNode }) => {
     }
   }, [user]);
 
+  const addDeseo = (productId: number) => {
+    if (!user) return;
+    deseosService.addDeseo(user.id, productId);
+    setDeseos(deseosService.getDeseos(user.id));
+  };
+
+  const removeDeseo = (productId: number) => {
+    if (!user) return;
+    deseosService.removeDeseo(user.id, productId);
+    setDeseos(deseosService.getDeseos(user.id));
+  };
+
+  const isInDeseos = (productId: number) => {
+    if (!user) return false;
+    return deseos.includes(productId);
+  };
 
   return (
-    <DeseosContext.Provider value={{ deseos }}>
+    <DeseosContext.Provider value={{ deseos, addDeseo, removeDeseo, isInDeseos }}>
       {children}
     </DeseosContext.Provider>
   );
