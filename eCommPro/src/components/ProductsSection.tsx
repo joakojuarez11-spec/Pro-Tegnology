@@ -27,7 +27,10 @@ export const ProductsSection: React.FC = () => {
             <div>
               <div className={`product-card-image ${product.imageBg}`}>
                 {product.image && (
-                  <img src={product.image} alt="" className="product-card-img-bg" aria-hidden="true" />
+                  <>
+                    <img src={product.image} alt="" className="product-card-img-bg" aria-hidden="true" />
+                    <img src={product.image} alt={product.name} className="product-card-img" />
+                  </>
                 )}
               </div>
             </div>
