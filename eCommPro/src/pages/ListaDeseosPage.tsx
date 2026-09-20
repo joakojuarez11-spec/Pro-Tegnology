@@ -43,6 +43,20 @@ export const ListaDeseosPage = () => {
         </div>
       ) : (
         <div className="deseos-grid">
+          {productos.map((product) => (
+            <div key={product.id} className="product-card">
+              <div>
+                <div className={`product-card-image ${product.imageBg}`}>
+                  <span className="product-card-category-icon">[ {product.categoryLabel} ]</span>
+                </div>
+                <div className="product-card-info">
+                  <span className="product-card-category">{product.categoryLabel}</span>
+                  <h3 className="product-card-name">{product.name}</h3>
+                  <div className="product-card-price">{product.priceFormatted}</div>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       )}
     </div>
