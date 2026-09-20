@@ -41,7 +41,13 @@ export const ProductsSection: React.FC = () => {
                 <h3 className="product-card-name">
                   {product.name}
                 </h3>
+                <div className="product-card-price">
+                  {product.priceFormatted}
+                </div>
               </div>
+            </div>
+
+            <div className="product-card-actions">
             </div>
           </div>
         ))}
