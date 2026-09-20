@@ -1,9 +1,11 @@
 import { Link } from 'react-router-dom';
-import { Eye } from 'lucide-react';
+import { ShoppingCart, Eye } from 'lucide-react';
+import { useCarrito } from '../context/CarritoContext';
 import { useProductos } from '../context/ProductosContext';
 import type { Producto } from '../context/ProductosContext';
 
 export const ProductsSection: React.FC = () => {
+  const { addItem } = useCarrito();
   const { productos } = useProductos();
   const featured = productos.filter(p => p.destacado);
 
@@ -55,6 +57,12 @@ export const ProductsSection: React.FC = () => {
               >
                 <Eye size={14} /> Ver
               </Link>
+              <button 
+                className="product-card-btn product-card-btn-buy"
+                onClick={() => addItem(product)}
+              >
+                <ShoppingCart size={14} /> Añadir al carrito
+              </button>
             </div>
           </div>
         ))}
