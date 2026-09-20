@@ -16,6 +16,9 @@ export const HeroBanner = () => {
               <span className="hero-title-gradient">Setup al siguiente</span> <br />
               <span className="hero-title-pink">Nivel</span>
             </h1>
+            <p className="hero-description">
+              Las mejores marcas, los mejores precios y todo en tecnología en un solo lugar.
+            </p>
           </div>
         </div>
       </div>

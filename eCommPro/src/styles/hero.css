@@ -89,3 +89,16 @@
 .hero-title-pink {
   color: var(--pink-500);
 }
+
+.hero-description {
+  color: var(--text-muted);
+  font-size: 15px;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .hero-description {
+    font-size: 14px;
+  }
+}
