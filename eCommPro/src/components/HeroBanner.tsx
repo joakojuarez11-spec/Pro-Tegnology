@@ -6,6 +6,12 @@ export const HeroBanner = () => {
       <div className="hero-banner" style={{ backgroundImage: `url(${fondoHero})` }}>
         {/* Main Content */}
         <div className="hero-main">
+          {/* Content Left */}
+          <div className="hero-content">
+            <span className="hero-badge">
+              GAMING SIN LÍMITES
+            </span>
+          </div>
         </div>
       </div>
     </div>
