@@ -102,3 +102,17 @@
     font-size: 14px;
   }
 }
+
+/* --------------------------------------------
+   Hero Button
+   -------------------------------------------- */
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+}

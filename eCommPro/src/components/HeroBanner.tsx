@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import fondoHero from '../assets/fondo-hero.jpg';
 
 export const HeroBanner = () => {
@@ -19,6 +20,12 @@ export const HeroBanner = () => {
             <p className="hero-description">
               Las mejores marcas, los mejores precios y todo en tecnología en un solo lugar.
             </p>
+            <Link 
+              to="/categoria/productos" 
+              className="hero-btn"
+            >
+              Ver productos <span>→</span>
+            </Link>
           </div>
         </div>
       </div>
