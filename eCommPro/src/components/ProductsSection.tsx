@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Eye } from 'lucide-react';
 import { useProductos } from '../context/ProductosContext';
 import type { Producto } from '../context/ProductosContext';
 
@@ -48,6 +49,12 @@ export const ProductsSection: React.FC = () => {
             </div>
 
             <div className="product-card-actions">
+              <Link 
+                to={`/producto/${product.id}`}
+                className="product-card-btn product-card-btn-view"
+              >
+                <Eye size={14} /> Ver
+              </Link>
             </div>
           </div>
         ))}
