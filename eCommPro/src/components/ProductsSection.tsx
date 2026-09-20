@@ -12,6 +12,9 @@ export const ProductsSection: React.FC = () => {
           Ver todos →
         </Link>
       </div>
+
+      <div className="products-grid">
+      </div>
     </section>
   );
 };
