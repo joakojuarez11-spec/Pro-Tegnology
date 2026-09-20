@@ -32,6 +32,9 @@ export const ProductsSection: React.FC = () => {
                     <img src={product.image} alt={product.name} className="product-card-img" />
                   </>
                 )}
+                <div className="product-card-badge">
+                  Nuevo
+                </div>
               </div>
             </div>
           </div>
