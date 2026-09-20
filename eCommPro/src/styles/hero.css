@@ -78,3 +78,14 @@
     margin: 12px 0;
   }
 }
+
+.hero-title-gradient {
+  background: linear-gradient(90deg, var(--cyan-400), var(--pink-500));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero-title-pink {
+  color: var(--pink-500);
+}

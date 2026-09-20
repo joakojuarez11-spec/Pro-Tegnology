@@ -13,8 +13,8 @@ export const HeroBanner = () => {
             </span>
             <h1 className="hero-title">
               Llevá tu <br />
-              Setup al siguiente <br />
-              Nivel
+              <span className="hero-title-gradient">Setup al siguiente</span> <br />
+              <span className="hero-title-pink">Nivel</span>
             </h1>
           </div>
         </div>
