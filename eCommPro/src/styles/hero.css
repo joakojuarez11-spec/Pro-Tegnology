@@ -150,3 +150,9 @@
     font-size: 14px;
   }
 }
+
+.hero-feature {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}

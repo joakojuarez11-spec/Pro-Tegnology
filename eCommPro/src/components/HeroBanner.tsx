@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import { Truck, ShieldCheck } from 'lucide-react';
 import fondoHero from '../assets/fondo-hero.jpg';
 
 export const HeroBanner = () => {
@@ -31,6 +32,14 @@ export const HeroBanner = () => {
 
         {/* Feature Badges */}
         <div className="hero-features">
+          <div className="hero-feature">
+            <Truck className="hero-feature-icon" size={20} />
+            <span>Envíos a todo el país</span>
+          </div>
+          <div className="hero-feature">
+            <ShieldCheck className="hero-feature-icon" size={20} />
+            <span>Pagos seguros</span>
+          </div>
         </div>
       </div>
     </div>
