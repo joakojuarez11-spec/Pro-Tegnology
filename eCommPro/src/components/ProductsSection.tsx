@@ -24,6 +24,10 @@ export const ProductsSection: React.FC = () => {
             key={product.id} 
             className="product-card"
           >
+            <div>
+              <div className={`product-card-image ${product.imageBg}`}>
+              </div>
+            </div>
           </div>
         ))}
       </div>
