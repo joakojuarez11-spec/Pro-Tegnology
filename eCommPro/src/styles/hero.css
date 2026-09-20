@@ -156,3 +156,8 @@
   align-items: center;
   gap: 12px;
 }
+
+.hero-feature-icon {
+  color: var(--cyan-400);
+  flex-shrink: 0;
+}
