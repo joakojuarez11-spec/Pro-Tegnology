@@ -1,6 +1,6 @@
 
 import { Link } from 'react-router-dom';
-import { Heart, ShoppingCart, Eye } from 'lucide-react';
+import { Heart, ShoppingCart, Eye, Trash2 } from 'lucide-react';
 import { useDeseos } from '../context/DeseosContext';
 import { useProductos } from '../context/ProductosContext';
 import type { Producto } from '../context/ProductosContext';
@@ -8,7 +8,7 @@ import { useCarrito } from '../context/CarritoContext';
 import { useAuth } from '../context/AuthContext';
 
 export const ListaDeseosPage = () => {
-  const { deseos } = useDeseos();
+  const { deseos, removeDeseo } = useDeseos();
   const { getById } = useProductos();
   const { addItem } = useCarrito();
   const { isLoggedIn } = useAuth();
@@ -63,6 +63,9 @@ export const ListaDeseosPage = () => {
                 </Link>
                 <button onClick={() => addItem(product)} className="product-card-btn product-card-btn-buy">
                   <ShoppingCart size={14} /> Comprar
+                </button>
+                <button onClick={() => removeDeseo(product.id)} className="product-card-btn product-card-btn-delete">
+                  <Trash2 size={14} /> Quitar
                 </button>
               </div>
             </div>
