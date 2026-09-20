@@ -11,6 +11,11 @@ export const HeroBanner = () => {
             <span className="hero-badge">
               GAMING SIN LÍMITES
             </span>
+            <h1 className="hero-title">
+              Llevá tu <br />
+              Setup al siguiente <br />
+              Nivel
+            </h1>
           </div>
         </div>
       </div>
