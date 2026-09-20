@@ -28,6 +28,10 @@ export const HeroBanner = () => {
             </Link>
           </div>
         </div>
+
+        {/* Feature Badges */}
+        <div className="hero-features">
+        </div>
       </div>
     </div>
   );
