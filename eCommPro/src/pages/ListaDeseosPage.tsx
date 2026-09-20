@@ -1,14 +1,16 @@
 
 import { Link } from 'react-router-dom';
-import { Heart } from 'lucide-react';
+import { Heart, ShoppingCart, Eye } from 'lucide-react';
 import { useDeseos } from '../context/DeseosContext';
 import { useProductos } from '../context/ProductosContext';
 import type { Producto } from '../context/ProductosContext';
+import { useCarrito } from '../context/CarritoContext';
 import { useAuth } from '../context/AuthContext';
 
 export const ListaDeseosPage = () => {
   const { deseos } = useDeseos();
   const { getById } = useProductos();
+  const { addItem } = useCarrito();
   const { isLoggedIn } = useAuth();
 
   const productos = deseos.map(id => getById(String(id))).filter(Boolean) as Producto[];
@@ -54,6 +56,14 @@ export const ListaDeseosPage = () => {
                   <h3 className="product-card-name">{product.name}</h3>
                   <div className="product-card-price">{product.priceFormatted}</div>
                 </div>
+              </div>
+              <div className="product-card-actions">
+                <Link to={`/producto/${product.id}`} className="product-card-btn product-card-btn-view">
+                  <Eye size={14} /> Ver
+                </Link>
+                <button onClick={() => addItem(product)} className="product-card-btn product-card-btn-buy">
+                  <ShoppingCart size={14} /> Comprar
+                </button>
               </div>
             </div>
           ))}
