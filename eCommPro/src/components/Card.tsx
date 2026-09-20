@@ -20,3 +20,19 @@ export const CardImage = ({ children, className = '' }: CardProps) => {
     </div>
   );
 };
+
+export const CardBody = ({ children, className = '' }: CardProps) => {
+  return (
+    <div className={`card-body ${className}`}>
+      {children}
+    </div>
+  );
+};
+
+export const CardActions = ({ children, className = '' }: CardProps) => {
+  return (
+    <div className={`card-actions ${className}`}>
+      {children}
+    </div>
+  );
+};
