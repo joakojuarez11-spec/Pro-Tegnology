@@ -1,6 +1,11 @@
 import { Link } from 'react-router-dom';
+import { useProductos } from '../context/ProductosContext';
+import type { Producto } from '../context/ProductosContext';
 
 export const ProductsSection: React.FC = () => {
+  const { productos } = useProductos();
+  const featured = productos.filter(p => p.destacado);
+
   return (
     <section className="products-section">
       <div className="products-header">
@@ -14,6 +19,13 @@ export const ProductsSection: React.FC = () => {
       </div>
 
       <div className="products-grid">
+        {featured.map((product: Producto) => (
+          <div 
+            key={product.id} 
+            className="product-card"
+          >
+          </div>
+        ))}
       </div>
     </section>
   );
