@@ -189,3 +189,21 @@ export const Navbar = () => {
           )}
         </div>
 
+{/* User Actions */}
+        <div className="navbar-actions">
+          <Link to="/cuenta" className="navbar-action">
+            <User size={18} className="navbar-action-icon" />
+            <div className="navbar-action-label">
+              <span className="navbar-action-label-small">Mi cuenta</span>
+              <span className="navbar-action-label-bold">Iniciar sesión</span>
+            </div>
+          </Link>
+          <Link to="/carrito" className="navbar-cart">
+            <ShoppingCart size={18} />
+            <span className="navbar-cart-badge">{itemCount}</span>
+          </Link>
+          <button className="navbar-hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
