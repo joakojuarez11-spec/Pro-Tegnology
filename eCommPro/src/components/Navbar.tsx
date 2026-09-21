@@ -189,3 +189,41 @@ export const Navbar = () => {
             </div>
           )}
         </div>
+
+        {/* User Actions */}
+        <div className="navbar-actions">
+          <Link to="/cuenta" className="navbar-action">
+            <User size={18} className="navbar-action-icon" />
+            <div className="navbar-action-label">
+              <span className="navbar-action-label-small">Mi cuenta</span>
+              <span className="navbar-action-label-bold">Iniciar sesión</span>
+            </div>
+          </Link>
+          <Link to="/carrito" className="navbar-cart">
+            <ShoppingCart size={18} />
+            <span className="navbar-cart-badge">{itemCount}</span>
+          </Link>
+          <button className="navbar-hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Navigation Links */}
+      <nav
+        className={`navbar-nav ${menuOpen ? 'open' : ''} hero-bg`}
+        style={{ backgroundImage: `url(${fondoHero})` }}
+      >
+        {/* Search mobile - solo visible en mobile */}
+        <div className="navbar-search-mobile" ref={mobileSearchContainerRef}>
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            value={mobileSearchQuery}
+            onChange={(e) => handleMobileSearchChange(e.target.value)}
+            onFocus={() => mobileSearchQuery.trim().length > 0 && setShowMobileResults(true)}
+            onKeyDown={handleMobileSearchKeyDown}
+          />
+          <button className="navbar-search-mobile-btn">
+            <Search size={16} />
+          </button>
