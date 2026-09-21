@@ -40,3 +40,30 @@ export const Navbar = () => {
       setShowResults(false);
     }
   };
+
+   // Mobile search handler
+  const handleMobileSearchChange = (value: string) => {
+    setMobileSearchQuery(value);
+    if (value.trim().length > 0) {
+      const results = search(value.trim());
+      setMobileSearchResults(results.slice(0, 8));
+      setShowMobileResults(true);
+    } else {
+      setMobileSearchResults([]);
+      setShowMobileResults(false);
+    }
+  };
+
+  // Handle Enter key on desktop search
+  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && searchResults.length > 0) {
+      navigate(`/producto/${searchResults[0].id}`);
+      setSearchQuery('');
+      setShowResults(false);
+      searchInputRef.current?.blur();
+    }
+    if (e.key === 'Escape') {
+      setShowResults(false);
+      searchInputRef.current?.blur();
+    }
+  };
