@@ -149,3 +149,43 @@ export const Navbar = () => {
           >
             <Search size={16} />
           </button>
+
+{/* Desktop Search Results Dropdown */}
+          {showResults && (
+            <div className="navbar-search-results">
+              {searchResults.length === 0 ? (
+                <div className="navbar-search-result-empty">
+                  No se encontraron productos
+                </div>
+              ) : (
+                <>
+                  {searchResults.map((product) => (
+                    <div
+                      key={product.id}
+                      className="navbar-search-result-item"
+                      onClick={() => handleResultClick(product.id)}
+                    >
+                      <div className={`navbar-search-result-image ${product.imageBg}`}>
+                        {product.image && (
+                          <img src={product.image} alt="" />
+                        )}
+                      </div>
+                      <div className="navbar-search-result-info">
+                        <span className="navbar-search-result-name">{product.name}</span>
+                        <span className="navbar-search-result-category">{product.categoryLabel}</span>
+                      </div>
+                      <span className="navbar-search-result-price">{product.priceFormatted}</span>
+                    </div>
+                  ))}
+                  <div className="navbar-search-result-more" onClick={() => {
+                    navigate(`/`);
+                    setShowResults(false);
+                    setSearchQuery('');
+                  }}>
+                    Ver todos los resultados ({searchResults.length})
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
