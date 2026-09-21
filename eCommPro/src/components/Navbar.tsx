@@ -3,14 +3,15 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, User, Heart, ShoppingCart, Home, Menu, X, ChevronDown, ChevronUp, Shield, Info } from 'lucide-react';
 import { useCarrito } from '../context/CarritoContext';
 import { useAuth } from '../context/AuthContext';
-import { useProductos } from '../context/ProductosContext';
+import { useProductos } from '../context/ProductContext';
+import type { Producto } from '../context/ProductContext';
 import logoImg from '../assets/logo.png';
 import nameImg from '../assets/name.png';
 import fondoHero from '../assets/fondo-hero.jpg';
 
 export const Navbar = () => {
   const { itemCount } = useCarrito();
-  const { isAdmin } = useAuth();
+  const { user, isLoggedIn, isAdmin } = useAuth();
   const { search } = useProductos();
   const location = useLocation();
   const navigate = useNavigate();
@@ -19,10 +20,10 @@ export const Navbar = () => {
   const [catsOpen, setCatsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [searchResults, setSearchResults] = useState<Producto[]>([]);
   const [showResults, setShowResults] = useState(false);
   const [mobileSearchQuery, setMobileSearchQuery] = useState('');
-  const [mobileSearchResults, setMobileSearchResults] = useState<any[]>([]);
+  const [mobileSearchResults, setMobileSearchResults] = useState<Producto[]>([]);
   const [showMobileResults, setShowMobileResults] = useState(false);
   const searchInputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
@@ -41,7 +42,7 @@ export const Navbar = () => {
     }
   };
 
-   // Mobile search handler
+  // Mobile search handler
   const handleMobileSearchChange = (value: string) => {
     setMobileSearchQuery(value);
     if (value.trim().length > 0) {
@@ -150,7 +151,7 @@ export const Navbar = () => {
             <Search size={16} />
           </button>
 
-{/* Desktop Search Results Dropdown */}
+          {/* Desktop Search Results Dropdown */}
           {showResults && (
             <div className="navbar-search-results">
               {searchResults.length === 0 ? (
@@ -196,7 +197,7 @@ export const Navbar = () => {
             <User size={18} className="navbar-action-icon" />
             <div className="navbar-action-label">
               <span className="navbar-action-label-small">Mi cuenta</span>
-              <span className="navbar-action-label-bold">Iniciar sesión</span>
+              <span className="navbar-action-label-bold">{isLoggedIn ? (user?.nombre ?? 'Mi Perfil') : 'Iniciar sesión'}</span>
             </div>
           </Link>
           <Link to="/carrito" className="navbar-cart">
@@ -261,7 +262,7 @@ export const Navbar = () => {
           )}
         </div>
 
- {/* Links desktop - categorías individuales */}
+        {/* Links desktop - categorías individuales */}
         <Link to="/" className={`navbar-nav-link ${isActive('/')}`} onClick={() => setMenuOpen(false)}>
           <Home size={16} /> Inicio
         </Link>

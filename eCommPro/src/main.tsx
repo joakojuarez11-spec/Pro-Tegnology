@@ -4,7 +4,7 @@ import './index.css'
 import { App } from './App.tsx'
 import { AuthProvider } from './context/AuthContext'
 import { ProductosProvider } from './context/ProductContext'
-import { CarritoProvider } from './context/CarritoContext'
+import { CarritoProvider } from './context/CarritoContext.tsx'
 import { DeseosProvider } from './context/DeseosContext'
 
 createRoot(document.getElementById('root')!).render(
