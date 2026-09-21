@@ -53,3 +53,29 @@ export const Navbar = () => {
       setShowMobileResults(false);
     }
   };
+
+   const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && searchResults.length > 0) {
+      navigate(`/producto/${searchResults[0].id}`);
+      setSearchQuery('');
+      setShowResults(false);
+      searchInputRef.current?.blur();
+    }
+    if (e.key === 'Escape') {
+      setShowResults(false);
+      searchInputRef.current?.blur();
+    }
+  };
+
+  // Handle Enter key on mobile search
+  const handleMobileSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && mobileSearchResults.length > 0) {
+      navigate(`/producto/${mobileSearchResults[0].id}`);
+      setMobileSearchQuery('');
+      setShowMobileResults(false);
+      setMenuOpen(false);
+    }
+    if (e.key === 'Escape') {
+      setShowMobileResults(false);
+    }
+  };
