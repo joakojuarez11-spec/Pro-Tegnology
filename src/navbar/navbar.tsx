@@ -227,3 +227,35 @@ export const Navbar = () => {
             <Search size={16} />
           </button>
 
+{/* Mobile Search Results Dropdown */}
+          {showMobileResults && (
+            <div className="navbar-search-results mobile">
+              {mobileSearchResults.length === 0 ? (
+                <div className="navbar-search-result-empty">
+                  No se encontraron productos
+                </div>
+              ) : (
+                <>
+                  {mobileSearchResults.map((product) => (
+                    <div
+                      key={product.id}
+                      className="navbar-search-result-item"
+                      onClick={() => handleResultClick(product.id)}
+                    >
+                      <div className={`navbar-search-result-image ${product.imageBg}`}>
+                        {product.image && (
+                          <img src={product.image} alt="" />
+                        )}
+                      </div>
+                      <div className="navbar-search-result-info">
+                        <span className="navbar-search-result-name">{product.name}</span>
+                        <span className="navbar-search-result-category">{product.categoryLabel}</span>
+                      </div>
+                      <span className="navbar-search-result-price">{product.priceFormatted}</span>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
+        </div>
