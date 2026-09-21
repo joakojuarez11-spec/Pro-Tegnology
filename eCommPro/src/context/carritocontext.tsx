@@ -49,3 +49,22 @@ export const CarritoProvider = ({ children }: { children: ReactNode }) => {
     setItems(updated);
     updateTotals(updated);
   };
+
+  const updateQuantity = (id: number, cantidad: number) => {
+    const updated = carritoService.updateQuantity(id, cantidad);
+    setItems(updated);
+    updateTotals(updated);
+  };
+
+  const clear = () => {
+    const updated = carritoService.clear();
+    setItems(updated);
+    updateTotals(updated);
+  };
+
+  return (
+    <CarritoContext.Provider value={{ items, total, itemCount, addItem, removeItem, updateQuantity, clear }}>
+      {children}
+    </CarritoContext.Provider>
+  );
+};
