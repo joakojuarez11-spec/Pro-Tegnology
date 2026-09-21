@@ -1,6 +1,6 @@
 const STORAGE_KEY = 'carrito';
 
-import { getProductoImage } from './productoService';
+import { getProductoImage } from './productoServices';
 
 interface Producto {
   id: number;

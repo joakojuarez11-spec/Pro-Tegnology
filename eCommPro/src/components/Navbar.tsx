@@ -1,7 +1,318 @@
+import { useState, useRef, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Search, User, Heart, ShoppingCart, Home, Menu, X, ChevronDown, ChevronUp, Shield, Info } from 'lucide-react';
+import { useCarrito } from '../context/CarritoContext';
+import { useAuth } from '../context/AuthContext';
+import { useProductos } from '../context/ProductosContext';
+import logoImg from '../assets/logo.png';
+import nameImg from '../assets/name.png';
+import fondoHero from '../assets/fondo-hero.jpg';
 
-{/* Solo mobile: Categorías dropdown + otros enlaces */}
+export const Navbar = () => {
+  const { itemCount } = useCarrito();
+  const { isAdmin } = useAuth();
+  const { search } = useProductos();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isActive = (path: string) => location.pathname === path ? 'active' : '';
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [catsOpen, setCatsOpen] = useState(false);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [searchResults, setSearchResults] = useState<any[]>([]);
+  const [showResults, setShowResults] = useState(false);
+  const [mobileSearchQuery, setMobileSearchQuery] = useState('');
+  const [mobileSearchResults, setMobileSearchResults] = useState<any[]>([]);
+  const [showMobileResults, setShowMobileResults] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
+  const mobileSearchContainerRef = useRef<HTMLDivElement>(null);
 
+  // Desktop search handler
+  const handleSearchChange = (value: string) => {
+    setSearchQuery(value);
+    if (value.trim().length > 0) {
+      const results = search(value.trim());
+      setSearchResults(results.slice(0, 8));
+      setShowResults(true);
+    } else {
+      setSearchResults([]);
+      setShowResults(false);
+    }
+  };
+
+   // Mobile search handler
+  const handleMobileSearchChange = (value: string) => {
+    setMobileSearchQuery(value);
+    if (value.trim().length > 0) {
+      const results = search(value.trim());
+      setMobileSearchResults(results.slice(0, 8));
+      setShowMobileResults(true);
+    } else {
+      setMobileSearchResults([]);
+      setShowMobileResults(false);
+    }
+  };
+
+  // Handle Enter key on desktop search
+  const handleSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && searchResults.length > 0) {
+      navigate(`/producto/${searchResults[0].id}`);
+      setSearchQuery('');
+      setShowResults(false);
+      searchInputRef.current?.blur();
+    }
+    if (e.key === 'Escape') {
+      setShowResults(false);
+      searchInputRef.current?.blur();
+    }
+  };
+
+  // Handle Enter key on mobile search
+  const handleMobileSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && mobileSearchResults.length > 0) {
+      navigate(`/producto/${mobileSearchResults[0].id}`);
+      setMobileSearchQuery('');
+      setShowMobileResults(false);
+      setMenuOpen(false);
+    }
+    if (e.key === 'Escape') {
+      setShowMobileResults(false);
+    }
+  };
+
+  // Click result handler
+  const handleResultClick = (productId: number) => {
+    navigate(`/producto/${productId}`);
+    setSearchQuery('');
+    setMobileSearchQuery('');
+    setShowResults(false);
+    setShowMobileResults(false);
+    setMenuOpen(false);
+  };
+
+  // Click outside to close results
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowResults(false);
+      }
+      if (mobileSearchContainerRef.current && !mobileSearchContainerRef.current.contains(e.target as Node)) {
+        setShowMobileResults(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Close results on route change
+  useEffect(() => {
+    setShowResults(false);
+    setShowMobileResults(false);
+    setSearchQuery('');
+    setMobileSearchQuery('');
+  }, [location.pathname]);
+
+  // Focus on search open (mobile)
+  useEffect(() => {
+    if (!searchOpen) return;
+    searchInputRef.current?.focus();
+  }, [searchOpen]);
+
+  return (
+    <header className="navbar">
+      {/* Top Bar */}
+      <div className="navbar-top">
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          <img src={logoImg} alt="TP" className="navbar-logo-icon-img" />
+          <img src={nameImg} alt="Pro Technology" className="navbar-logo-name-img" />
+        </Link>
+
+        {/* Search Bar Desktop */}
+        <div className={`navbar-search ${searchOpen ? 'open' : ''}`} ref={searchContainerRef}>
+          <input
+            ref={searchInputRef}
+            type="text"
+            placeholder="Buscar productos..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            onFocus={() => searchQuery.trim().length > 0 && setShowResults(true)}
+            onKeyDown={handleSearchKeyDown}
+          />
+          <button
+            className="navbar-search-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!searchOpen) setSearchOpen(true);
+            }}
+          >
+            <Search size={16} />
+          </button>
+
+{/* Desktop Search Results Dropdown */}
+          {showResults && (
+            <div className="navbar-search-results">
+              {searchResults.length === 0 ? (
+                <div className="navbar-search-result-empty">
+                  No se encontraron productos
+                </div>
+              ) : (
+                <>
+                  {searchResults.map((product) => (
+                    <div
+                      key={product.id}
+                      className="navbar-search-result-item"
+                      onClick={() => handleResultClick(product.id)}
+                    >
+                      <div className={`navbar-search-result-image ${product.imageBg}`}>
+                        {product.image && (
+                          <img src={product.image} alt="" />
+                        )}
+                      </div>
+                      <div className="navbar-search-result-info">
+                        <span className="navbar-search-result-name">{product.name}</span>
+                        <span className="navbar-search-result-category">{product.categoryLabel}</span>
+                      </div>
+                      <span className="navbar-search-result-price">{product.priceFormatted}</span>
+                    </div>
+                  ))}
+                  <div className="navbar-search-result-more" onClick={() => {
+                    navigate(`/`);
+                    setShowResults(false);
+                    setSearchQuery('');
+                  }}>
+                    Ver todos los resultados ({searchResults.length})
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* User Actions */}
+        <div className="navbar-actions">
+          <Link to="/cuenta" className="navbar-action">
+            <User size={18} className="navbar-action-icon" />
+            <div className="navbar-action-label">
+              <span className="navbar-action-label-small">Mi cuenta</span>
+              <span className="navbar-action-label-bold">Iniciar sesión</span>
+            </div>
+          </Link>
+          <Link to="/carrito" className="navbar-cart">
+            <ShoppingCart size={18} />
+            <span className="navbar-cart-badge">{itemCount}</span>
+          </Link>
+          <button className="navbar-hamburger" onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
+        </div>
+      </div>
+
+      {/* Navigation Links */}
+      <nav
+        className={`navbar-nav ${menuOpen ? 'open' : ''} hero-bg`}
+        style={{ backgroundImage: `url(${fondoHero})` }}
+      >
+        {/* Search mobile - solo visible en mobile */}
+        <div className="navbar-search-mobile" ref={mobileSearchContainerRef}>
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            value={mobileSearchQuery}
+            onChange={(e) => handleMobileSearchChange(e.target.value)}
+            onFocus={() => mobileSearchQuery.trim().length > 0 && setShowMobileResults(true)}
+            onKeyDown={handleMobileSearchKeyDown}
+          />
+          <button className="navbar-search-mobile-btn">
+            <Search size={16} />
+          </button>
+
+          {/* Mobile Search Results Dropdown */}
+          {showMobileResults && (
+            <div className="navbar-search-results mobile">
+              {mobileSearchResults.length === 0 ? (
+                <div className="navbar-search-result-empty">
+                  No se encontraron productos
+                </div>
+              ) : (
+                <>
+                  {mobileSearchResults.map((product) => (
+                    <div
+                      key={product.id}
+                      className="navbar-search-result-item"
+                      onClick={() => handleResultClick(product.id)}
+                    >
+                      <div className={`navbar-search-result-image ${product.imageBg}`}>
+                        {product.image && (
+                          <img src={product.image} alt="" />
+                        )}
+                      </div>
+                      <div className="navbar-search-result-info">
+                        <span className="navbar-search-result-name">{product.name}</span>
+                        <span className="navbar-search-result-category">{product.categoryLabel}</span>
+                      </div>
+                      <span className="navbar-search-result-price">{product.priceFormatted}</span>
+                    </div>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
+        </div>
+
+ {/* Links desktop - categorías individuales */}
+        <Link to="/" className={`navbar-nav-link ${isActive('/')}`} onClick={() => setMenuOpen(false)}>
+          <Home size={16} /> Inicio
+        </Link>
+        <Link to="/about" className={`navbar-nav-link ${isActive('/about')}`} onClick={() => setMenuOpen(false)}>
+          <Info size={16} /> Nosotros
+        </Link>
+        {isAdmin && (
+          <Link to="/admin" className={`navbar-nav-link ${isActive('/admin')}`} onClick={() => setMenuOpen(false)}>
+            <Shield size={16} /> Admin
+          </Link>
+        )}
+        <Link to="/categoria/laptops" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/laptops')}`} onClick={() => setMenuOpen(false)}>Laptops</Link>
+        <Link to="/categoria/pc-gamer" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/pc-gamer')}`} onClick={() => setMenuOpen(false)}>PC Gamer</Link>
+        <Link to="/categoria/celulares" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/celulares')}`} onClick={() => setMenuOpen(false)}>Celulares</Link>
+        <Link to="/categoria/accesorios" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/accesorios')}`} onClick={() => setMenuOpen(false)}>Accesorios</Link>
+        <Link to="/categoria/componentes" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/componentes')}`} onClick={() => setMenuOpen(false)}>Componentes</Link>
+        <Link to="/categoria/perifericos" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/perifericos')}`} onClick={() => setMenuOpen(false)}>Periféricos</Link>
+        <Link to="/categoria/gaming" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/gaming')}`} onClick={() => setMenuOpen(false)}>Gaming</Link>
+
+        {/* Solo mobile: Categorías dropdown + otros enlaces */}
+        <div className="navbar-mobile-only">
+          <Link to="/about" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
+            <Info size={16} /> Nosotros
+          </Link>
+          {isAdmin && (
+            <Link to="/admin" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
+              <Shield size={16} /> Admin
+            </Link>
+          )}
+          <div className="navbar-cats-dropdown">
+            <button className="navbar-nav-link cats-toggle" onClick={() => setCatsOpen(!catsOpen)}>
+              Categorías {catsOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+            </button>
+            <div className={`navbar-cats-menu ${catsOpen ? 'open' : ''}`}>
+              <Link to="/categoria/laptops" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Laptops</Link>
+              <Link to="/categoria/pc-gamer" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>PC Gamer</Link>
+              <Link to="/categoria/celulares" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Celulares</Link>
+              <Link to="/categoria/accesorios" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Accesorios</Link>
+              <Link to="/categoria/componentes" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Componentes</Link>
+              <Link to="/categoria/perifericos" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Periféricos</Link>
+              <Link to="/categoria/gaming" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Gaming</Link>
+            </div>
+          </div>
           <Link to="/lista-de-deseos" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
             <Heart size={16} /> Lista de deseos
           </Link>
+          <Link to="/cuenta" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
+            <User size={16} /> Mi cuenta
+          </Link>
+        </div>
+      </nav>
+    </header>
+  );
+};
