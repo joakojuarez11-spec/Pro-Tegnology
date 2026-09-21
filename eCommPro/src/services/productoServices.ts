@@ -99,6 +99,7 @@ const ofertasImages: Record<string, string> = {
   'Auriculares Sony WH-1000XM5': new URL('../assets/Accesorios/Auriculares Bluetooth Pro Max.png', import.meta.url).href,
   'Monitor Curvo 27\'\' 165Hz Gaming': new URL('../assets/Perifericos/Monitor Curvo 27\'\' 165Hz Gaming.png', import.meta.url).href,
 };
+
 const productosIniciales: Producto[] = [
   // ==================== LAPTOPS (6) ====================
   {
@@ -1169,4 +1170,3 @@ export const getProductoImage = (id: number): string => {
   const p = productosIniciales.find(p => p.id === id);
   return p ? p.image : '';
 };
-

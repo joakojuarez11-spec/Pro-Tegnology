@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import { Navbar } from './components/Navbar';
 import { Footer } from './components/Footer';
 import { ScrollToTop } from './components/ScrollToTop';
@@ -15,6 +16,7 @@ import { NotFoundPage } from './pages/NotFoundPage';
 export function App() {
   return (
     <Router>
+      <Toaster richColors position="top-center" />
       { <ScrollToTop /> }
       <div className="min-h-screen bg-primary flex flex-col">
         <Navbar />
