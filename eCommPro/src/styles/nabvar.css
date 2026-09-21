@@ -143,3 +143,86 @@
   align-items: center;
   justify-content: center;
 }
+
+.navbar-search-result-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.navbar-search-result-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-search-result-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.navbar-search-result-category {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.navbar-search-result-price {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--cyan-400);
+  white-space: nowrap;
+}
+
+.navbar-search-result-more {
+  padding: 10px 16px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--pink-400);
+  cursor: pointer;
+  border-top: 1px solid var(--border-cyan);
+  transition: background var(--transition-fast);
+}
+
+.navbar-search-result-more:hover {
+  background: rgba(236, 72, 153, 0.08);
+}
+
+.navbar-search-result-empty {
+  padding: 24px 16px;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+/* Mobile search results */
+.navbar-search-results.mobile {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  max-height: 300px;
+}
+
+/* --------------------------------------------
+   Search Mobile (inside hamburger menu)
+   -------------------------------------------- */
+.navbar-search-mobile {
+  display: none;
+  position: relative;
+}
+
+.navbar-search-mobile input {
+  width: 100%;
+  background: var(--bg-input);
+  border: 1px solid rgba(6, 182, 212, 0.4);
+  border-radius: var(--radius-full);
+  padding: 10px 40px 10px 16px;
+  font-size: 14px;
+  color: var(--text-primary);
+  outline: none;
+}
