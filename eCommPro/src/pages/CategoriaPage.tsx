@@ -3,7 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { ShoppingCart, Star, Monitor, Gamepad2, Smartphone, Cable, Cpu, Headphones, Gamepad } from 'lucide-react';
 import { useProductos } from '../context/ProductContext';
 import type { Producto } from '../context/ProductContext';
-import { useCarrito } from '../context/carritocontext';
+import { useCarrito } from '../context/CarritoContext';
 
 const categorias = [
   { slug: 'laptops', label: 'Laptops', icon: Monitor },

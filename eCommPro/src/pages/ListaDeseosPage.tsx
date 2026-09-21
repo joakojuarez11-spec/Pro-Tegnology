@@ -4,7 +4,7 @@ import { Heart, ShoppingCart, Eye, Trash2 } from 'lucide-react';
 import { useDeseos } from '../context/DeseosContext';
 import { useProductos } from '../context/ProductContext';
 import type { Producto } from '../context/ProductContext';
-import { useCarrito } from '../context/carritocontext';
+import { useCarrito } from '../context/CarritoContext';
 import { useAuth } from '../context/AuthContext';
 
 export const ListaDeseosPage = () => {
