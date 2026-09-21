@@ -953,3 +953,220 @@ const productosIniciales: Producto[] = [
     reviews: 89,
     stock: 20
   },
+
+  // ==================== OFERTAS (6) ====================
+  {
+    id: 43,
+    name: "Samsung Galaxy S24 128GB",
+    image: ofertasImages['Samsung Galaxy S24 128GB'],
+    category: "ofertas",
+    categoryLabel: "Ofertas",
+    price: 899990,
+    priceFormatted: "$899.990",
+    imageBg: "purple-indigo",
+    description: "Smartphone flagship con IA Galaxy, cámara de 50MP y pantalla Dynamic AMOLED 2X.",
+    specs: ["Exynos 2400", "128GB", "50MP Cámara", "4000mAh", "6.2'' AMOLED"],
+    destacado: true,
+    oferta: true,
+    brand: "ASUS",
+    discount: 20,
+    badgeType: "discount",
+    rating: 4.6,
+    reviews: 150,
+    stock: 35
+  },
+  {
+    id: 44,
+    name: "iPhone 14 128GB",
+    image: ofertasImages['iPhone 14 128GB'],
+    category: "ofertas",
+    categoryLabel: "Ofertas",
+    price: 799990,
+    priceFormatted: "$799.990",
+    imageBg: "cyan-blue",
+    description: "iPhone con chip A15 Bionic, cámara dual de 12MP y Face ID.",
+    specs: ["A15 Bionic", "128GB", "12MP Dual", "Face ID", "6.1'' OLED"],
+    destacado: true,
+    oferta: true,
+    brand: "Lenovo",
+    discount: 15,
+    badgeType: "discount",
+    rating: 4.7,
+    reviews: 200,
+    stock: 28
+  },
+  {
+    id: 45,
+    name: "ASUS TUF Gaming F15 RTX 4050",
+    image: ofertasImages['ASUS TUF Gaming F15 RTX 4050'],
+    category: "ofertas",
+    categoryLabel: "Ofertas",
+    price: 999990,
+    priceFormatted: "$999.990",
+    imageBg: "pink-purple",
+    description: "Notebook gamer con Intel i5, 8GB RAM, RTX 4050 y pantalla 144Hz.",
+    specs: ["Intel i5-12500H", "8GB DDR4", "RTX 4050 6GB", "512GB SSD", "15.6'' FHD 144Hz"],
+    destacado: true,
+    oferta: true,
+    brand: "ASUS",
+    discount: 18,
+    badgeType: "discount",
+    rating: 4.5,
+    reviews: 86,
+    stock: 15
+  },
+  {
+    id: 46,
+    name: "Teclado Logitech MX Keys S",
+    image: ofertasImages['Teclado Logitech MX Keys S'],
+    category: "ofertas",
+    categoryLabel: "Ofertas",
+    price: 149990,
+    priceFormatted: "$149.990",
+    imageBg: "cyan-teal",
+    description: "Teclado inalámbrico premium con retroiluminación inteligente y conexión multi-dispositivo.",
+    specs: ["Bluetooth + USB", "Retroiluminación", "Multi-device", "Carga USB-C", "Mac/Win"],
+    destacado: false,
+    oferta: true,
+    brand: "HP",
+    discount: 25,
+    badgeType: "discount",
+    rating: 4.8,
+    reviews: 120,
+    stock: 22
+  },
+  {
+    id: 47,
+    name: "Monitor LG 27'' 4K UHD",
+    image: ofertasImages['Monitor LG 27\'\' 4K UHD'],
+    category: "ofertas",
+    categoryLabel: "Ofertas",
+    price: 349990,
+    priceFormatted: "$349.990",
+    imageBg: "blue-purple",
+    description: "Monitor 4K con IPS Nano Color, HDR 10 y 98% DCI-P3 para gaming y diseño.",
+    specs: ["27'' IPS", "4K UHD", "144Hz", "HDR 10", "98% DCI-P3"],
+    destacado: true,
+    oferta: true,
+    brand: "Acer",
+    discount: 10,
+    badgeType: "discount",
+    rating: 4.6,
+    reviews: 78,
+    stock: 18
+  },
+  {
+    id: 48,
+    name: "Auriculares Sony WH-1000XM5",
+    image: ofertasImages['Auriculares Sony WH-1000XM5'],
+    category: "ofertas",
+    categoryLabel: "Ofertas",
+    price: 299990,
+    priceFormatted: "$299.990",
+    imageBg: "indigo-cyan",
+    description: "Auriculares over-ear con mejor cancelación de ruido del mercado y 30hs de batería.",
+    specs: ["ANC líder", "30hs batería", "Hi-Res", "Multipoint", "LDAC"],
+    destacado: true,
+    oferta: true,
+    brand: "MSI",
+    discount: 22,
+    badgeType: "discount",
+    rating: 4.9,
+    reviews: 165,
+    stock: 12
+  }
+];
+
+export const getAll = (): Producto[] => {
+  const storedVersion = localStorage.getItem(STORAGE_VERSION_KEY);
+  const stored = localStorage.getItem(STORAGE_KEY);
+
+  if (!stored || storedVersion !== String(CURRENT_VERSION)) {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(productosIniciales));
+    localStorage.setItem(STORAGE_VERSION_KEY, String(CURRENT_VERSION));
+    return productosIniciales;
+  }
+  const parsed: Producto[] = JSON.parse(stored);
+  const imageMap: Record<number, string> = {};
+  productosIniciales.forEach(p => { imageMap[p.id] = p.image; });
+  return parsed.map(p => ({ ...p, image: p.image || imageMap[p.id] }));
+};
+
+export const getById = (id: string): Producto | undefined => {
+  const productos = getAll();
+  return productos.find(p => p.id === Number(id));
+};
+
+export const getByCategory = (slug: string): Producto[] => {
+  const productos = getAll();
+  return productos.filter(p => p.category === slug);
+};
+
+export const getDestacados = (): Producto[] => {
+  const productos = getAll();
+  return productos.filter(p => p.destacado);
+};
+
+export const search = (query: string): Producto[] => {
+  const productos = getAll();
+  const lower = query.toLowerCase();
+  return productos.filter(p =>
+    p.name.toLowerCase().includes(lower) ||
+    p.categoryLabel.toLowerCase().includes(lower)
+  );
+};
+
+export const addProduct = (product: Omit<Producto, 'id'>): Producto => {
+  const productos = getAll();
+  const newId = productos.length > 0 ? Math.max(...productos.map(p => p.id)) + 1 : 1;
+  const newProduct: Producto = { ...product, id: newId };
+  productos.push(newProduct);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
+  return newProduct;
+};
+
+export const updateProduct = (id: number, data: Partial<Producto>): void => {
+  const productos = getAll();
+  const index = productos.findIndex(p => p.id === id);
+  if (index !== -1) {
+    productos[index] = { ...productos[index], ...data, id };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
+  }
+};
+
+export const deleteProduct = (id: number): void => {
+  const productos = getAll();
+  const filtered = productos.filter(p => p.id !== id);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+};
+
+export const updateStock = (id: number, delta: number): void => {
+  const productos = getAll();
+  const index = productos.findIndex(p => p.id === id);
+  if (index !== -1) {
+    productos[index].stock = Math.max(0, productos[index].stock + delta);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(productos));
+  }
+};
+
+export const getCategories = (): Categoria[] => {
+  return [
+    { slug: 'laptops', label: 'Laptops' },
+    { slug: 'pc-gamer', label: 'PC Gamer' },
+    { slug: 'celulares', label: 'Celulares' },
+    { slug: 'accesorios', label: 'Accesorios' },
+    { slug: 'componentes', label: 'Componentes' },
+    { slug: 'perifericos', label: 'Periféricos' },
+    { slug: 'gaming', label: 'Gaming' }
+  ];
+};
+
+export const getBrands = (): string[] => {
+  return ["Lenovo", "ASUS", "HP", "Acer", "MSI"];
+};
+
+export const getProductoImage = (id: number): string => {
+  const p = productosIniciales.find(p => p.id === id);
+  return p ? p.image : '';
+};
+
