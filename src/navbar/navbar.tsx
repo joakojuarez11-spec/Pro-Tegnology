@@ -207,3 +207,23 @@ export const Navbar = () => {
           </button>
         </div>
       </div>
+
+      {/* Navigation Links */}
+      <nav
+        className={`navbar-nav ${menuOpen ? 'open' : ''} hero-bg`}
+        style={{ backgroundImage: `url(${fondoHero})` }}
+      >
+        {/* Search mobile - solo visible en mobile */}
+        <div className="navbar-search-mobile" ref={mobileSearchContainerRef}>
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            value={mobileSearchQuery}
+            onChange={(e) => handleMobileSearchChange(e.target.value)}
+            onFocus={() => mobileSearchQuery.trim().length > 0 && setShowMobileResults(true)}
+            onKeyDown={handleMobileSearchKeyDown}
+          />
+          <button className="navbar-search-mobile-btn">
+            <Search size={16} />
+          </button>
+
