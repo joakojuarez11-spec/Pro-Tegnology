@@ -40,3 +40,25 @@ export const CategoriaPage = () => {
   } else if (sortBy === 'rating') {
     productos = [...productos].sort((a: Producto, b: Producto) => b.rating - a.rating);
   }
+
+  const titulo = slug.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase());
+
+  const toggleBrand = (brand: string) => {
+    setSelectedBrands(prev => 
+      prev.includes(brand) 
+        ? prev.filter(b => b !== brand)
+        : [...prev, brand]
+    );
+  };
+
+  const getBadgeClass = (product: Producto) => {
+    if (product.badgeType === 'new') return 'badge-new';
+    if (product.badgeType === 'offer') return 'badge-offer';
+    return 'badge-discount';
+  };
+
+  const getBadgeText = (product: Producto) => {
+    if (product.badgeType === 'new') return 'Nuevo';
+    if (product.badgeType === 'offer') return 'Oferta';
+    return `-${product.discount}%`;
+  };
