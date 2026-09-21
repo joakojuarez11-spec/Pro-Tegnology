@@ -1,0 +1,194 @@
+:root {
+  --bg-primary: #03070d;
+  --bg-secondary: #050b14;
+  --bg-card: #07111e;
+  --bg-input: #0a1628;
+  --bg-surface: #060f1b;
+  --cyan-300: #67e8f9;
+  --cyan-400: #22d3ee;
+  --cyan-500: #06b6d4;
+  --cyan-900: #164e63;
+  --cyan-950: #083344;
+  --pink-300: #f9a8d4;
+  --pink-400: #f472b6;
+  --pink-500: #ec4899;
+  --pink-600: #db2777;
+  --purple-400: #c084fc;
+  --purple-500: #a855f7;
+  --text-primary: #ffffff;
+  --text-secondary: #e5e7eb;
+  --text-muted: #9ca3af;
+  --text-dimmed: #6b7280;
+  --border-cyan: rgba(6, 182, 212, 0.3);
+  --border-cyan-strong: rgba(6, 182, 212, 0.5);
+  --border-pink: rgba(236, 72, 153, 0.3);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+  --shadow-cyan: 0 10px 15px -3px rgba(6, 182, 212, 0.2);
+  --shadow-pink: 0 10px 15px -3px rgba(236, 72, 153, 0.2);
+  --font-sans: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-mono: ui-monospace, Consolas, monospace;
+  --transition-fast: 150ms ease;
+  --transition-normal: 200ms ease;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 9999px;
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+body { margin: 0; background: var(--bg-primary); color: var(--text-primary); }
+#root { width: 100%; min-height: 100vh; display: flex; flex-direction: column; }
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
+ul, ol { list-style: none; }
+img { max-width: 100%; display: block; }
+h1, h2, h3, h4, h5, h6 { font-weight: 700; color: var(--text-primary); }
+input, textarea, select { font-family: inherit; font-size: inherit; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: var(--bg-secondary); }
+::-webkit-scrollbar-thumb { background: var(--cyan-900); border-radius: var(--radius-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--cyan-500); }
+
+.flex { display: flex; }
+.flex-col { flex-direction: column; }
+.items-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 4px; }
+.gap-2 { gap: 8px; }
+.gap-3 { gap: 12px; }
+.gap-4 { gap: 16px; }
+.gap-6 { gap: 24px; }
+.gap-8 { gap: 32px; }
+
+.grid { display: grid; }
+.grid-2 { grid-template-columns: repeat(2, 1fr); }
+.grid-3 { grid-template-columns: repeat(3, 1fr); }
+.grid-4 { grid-template-columns: repeat(4, 1fr); }
+.grid-6 { grid-template-columns: repeat(6, 1fr); }
+
+.w-full { width: 100%; }
+.h-full { height: 100%; }
+.min-h-screen { min-height: 100vh; }
+
+.text-xs { font-size: 12px; line-height: 16px; }
+.text-sm { font-size: 14px; line-height: 20px; }
+.text-base { font-size: 16px; line-height: 24px; }
+.font-medium { font-weight: 500; }
+.font-semibold { font-weight: 600; }
+.font-bold { font-weight: 700; }
+.font-black { font-weight: 900; }
+.uppercase { text-transform: uppercase; }
+.text-center { text-align: center; }
+
+.relative { position: relative; }
+.absolute { position: absolute; }
+.z-10 { z-index: 10; }
+.z-20 { z-index: 20; }
+.overflow-hidden { overflow: hidden; }
+.overflow-x-auto { overflow-x: auto; }
+.pointer-events-none { pointer-events: none; }
+.shrink-0 { flex-shrink: 0; }
+
+.transition-colors { transition: color var(--transition-fast), background-color var(--transition-fast), border-color var(--transition-fast); }
+.transition-all { transition: all var(--transition-normal); }
+
+.rounded { border-radius: var(--radius-md); }
+.rounded-lg { border-radius: var(--radius-lg); }
+.rounded-xl { border-radius: var(--radius-xl); }
+.rounded-2xl { border-radius: var(--radius-2xl); }
+.rounded-full { border-radius: var(--radius-full); }
+
+.border { border-width: 1px; border-style: solid; }
+.border-b { border-bottom-width: 1px; border-bottom-style: solid; }
+.border-t { border-top-width: 1px; border-top-style: solid; }
+
+.block { display: block; }
+.inline-flex { display: inline-flex; }
+.hidden { display: none; }
+.backdrop-blur-md { backdrop-filter: blur(12px); }
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.bg-primary { background: var(--bg-primary); }
+.bg-secondary { background: var(--bg-secondary); }
+.bg-card { background: var(--bg-card); }
+.bg-input { background: var(--bg-input); }
+.bg-surface { background: var(--bg-surface); }
+
+.text-cyan { color: var(--cyan-400); }
+.text-pink { color: var(--pink-500); }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 14px;
+  transition: all var(--transition-normal);
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--cyan-400), var(--cyan-500));
+  color: #000;
+  box-shadow: var(--shadow-cyan);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--cyan-300), var(--cyan-400));
+}
+
+.btn-secondary {
+  background: var(--bg-input);
+  color: var(--cyan-300);
+  border: 1px solid var(--border-cyan);
+}
+.btn-secondary:hover {
+  background: var(--cyan-950);
+  border-color: var(--cyan-400);
+}
+
+.btn-pink {
+  background: var(--pink-600);
+  color: white;
+  box-shadow: var(--shadow-pink);
+}
+.btn-pink:hover {
+  background: var(--pink-500);
+}
+
+.space-y-2 > * + * { margin-top: 8px; }
+.space-y-3 > * + * { margin-top: 12px; }
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4, .grid-6 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-6 { grid-template-columns: repeat(3, 1fr); }
+}
