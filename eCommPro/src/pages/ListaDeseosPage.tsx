@@ -2,9 +2,9 @@
 import { Link } from 'react-router-dom';
 import { Heart, ShoppingCart, Eye, Trash2 } from 'lucide-react';
 import { useDeseos } from '../context/DeseosContext';
-import { useProductos } from '../context/ProductosContext';
-import type { Producto } from '../context/ProductosContext';
-import { useCarrito } from '../context/CarritoContext';
+import { useProductos } from '../context/ProductContext';
+import type { Producto } from '../context/ProductContext';
+import { useCarrito } from '../context/carritocontext';
 import { useAuth } from '../context/AuthContext';
 
 export const ListaDeseosPage = () => {
@@ -49,7 +49,12 @@ export const ListaDeseosPage = () => {
             <div key={product.id} className="product-card">
               <div>
                 <div className={`product-card-image ${product.imageBg}`}>
-                  <span className="product-card-category-icon">[ {product.categoryLabel} ]</span>
+                  {product.image && (
+                    <>
+                      <img src={product.image} alt="" className="product-card-img-bg" aria-hidden="true" />
+                      <img src={product.image} alt={product.name} className="product-card-img" />
+                    </>
+                  )}
                 </div>
                 <div className="product-card-info">
                   <span className="product-card-category">{product.categoryLabel}</span>

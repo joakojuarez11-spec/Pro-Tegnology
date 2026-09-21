@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Trash2, Plus, Minus, ArrowLeft } from 'lucide-react';
-import { useCarrito } from '../context/CarritoContext';
+import { useCarrito } from '../context/carritocontext';
 
 export const CarritoPage = () => {
   const { items, total, itemCount, updateQuantity, removeItem, clear } = useCarrito();
