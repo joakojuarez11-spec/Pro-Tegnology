@@ -112,3 +112,40 @@ export const Navbar = () => {
     setSearchQuery('');
     setMobileSearchQuery('');
   }, [location.pathname]);
+
+  // Focus on search open (mobile)
+  useEffect(() => {
+    if (!searchOpen) return;
+    searchInputRef.current?.focus();
+  }, [searchOpen]);
+
+  return (
+    <header className="navbar">
+      {/* Top Bar */}
+      <div className="navbar-top">
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          <img src={logoImg} alt="TP" className="navbar-logo-icon-img" />
+          <img src={nameImg} alt="Pro Technology" className="navbar-logo-name-img" />
+        </Link>
+
+        {/* Search Bar Desktop */}
+        <div className={`navbar-search ${searchOpen ? 'open' : ''}`} ref={searchContainerRef}>
+          <input
+            ref={searchInputRef}
+            type="text"
+            placeholder="Buscar productos..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            onFocus={() => searchQuery.trim().length > 0 && setShowResults(true)}
+            onKeyDown={handleSearchKeyDown}
+          />
+          <button
+            className="navbar-search-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!searchOpen) setSearchOpen(true);
+            }}
+          >
+            <Search size={16} />
+          </button>
