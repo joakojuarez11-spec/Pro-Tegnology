@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Eye } from 'lucide-react';
-import { useCarrito } from '../context/CarritoContext';
+import { useCarrito } from '../context/carritocontext';
 import { useProductos } from '../context/ProductContext';
 import type { Producto } from '../context/ProductContext';
 
