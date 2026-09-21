@@ -67,3 +67,48 @@ export const Navbar = () => {
       searchInputRef.current?.blur();
     }
   };
+
+  // Handle Enter key on mobile search
+  const handleMobileSearchKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && mobileSearchResults.length > 0) {
+      navigate(`/producto/${mobileSearchResults[0].id}`);
+      setMobileSearchQuery('');
+      setShowMobileResults(false);
+      setMenuOpen(false);
+    }
+    if (e.key === 'Escape') {
+      setShowMobileResults(false);
+    }
+  };
+
+  // Click result handler
+  const handleResultClick = (productId: number) => {
+    navigate(`/producto/${productId}`);
+    setSearchQuery('');
+    setMobileSearchQuery('');
+    setShowResults(false);
+    setShowMobileResults(false);
+    setMenuOpen(false);
+  };
+
+  // Click outside to close results
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowResults(false);
+      }
+      if (mobileSearchContainerRef.current && !mobileSearchContainerRef.current.contains(e.target as Node)) {
+        setShowMobileResults(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Close results on route change
+  useEffect(() => {
+    setShowResults(false);
+    setShowMobileResults(false);
+    setSearchQuery('');
+    setMobileSearchQuery('');
+  }, [location.pathname]);
