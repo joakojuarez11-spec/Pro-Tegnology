@@ -1,8 +1,8 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
-import * as productoService from '../services/productoService';
-import type { Producto, Categoria } from '../services/productoService';
+import * as productoService from '../services/productoServices';
+import type { Producto, Categoria } from '../services/productoServices';
 
 export type { Producto, Categoria };
 
