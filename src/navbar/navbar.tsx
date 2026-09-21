@@ -79,3 +79,72 @@ export const Navbar = () => {
       setShowMobileResults(false);
     }
   };
+
+  // Click result handler
+  const handleResultClick = (productId: number) => {
+    navigate(`/producto/${productId}`);
+    setSearchQuery('');
+    setMobileSearchQuery('');
+    setShowResults(false);
+    setShowMobileResults(false);
+    setMenuOpen(false);
+  };
+
+  // Click outside to close results
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setShowResults(false);
+      }
+      if (mobileSearchContainerRef.current && !mobileSearchContainerRef.current.contains(e.target as Node)) {
+        setShowMobileResults(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  // Close results on route change
+  useEffect(() => {
+    setShowResults(false);
+    setShowMobileResults(false);
+    setSearchQuery('');
+    setMobileSearchQuery('');
+  }, [location.pathname]);
+
+  // Focus on search open (mobile)
+  useEffect(() => {
+    if (!searchOpen) return;
+    searchInputRef.current?.focus();
+  }, [searchOpen]);
+
+  return (
+    <header className="navbar">
+      {/* Top Bar */}
+      <div className="navbar-top">
+        {/* Logo */}
+        <Link to="/" className="navbar-logo">
+          <img src={logoImg} alt="TP" className="navbar-logo-icon-img" />
+          <img src={nameImg} alt="Pro Technology" className="navbar-logo-name-img" />
+        </Link>
+
+        {/* Search Bar Desktop */}
+        <div className={`navbar-search ${searchOpen ? 'open' : ''}`} ref={searchContainerRef}>
+          <input
+            ref={searchInputRef}
+            type="text"
+            placeholder="Buscar productos..."
+            value={searchQuery}
+            onChange={(e) => handleSearchChange(e.target.value)}
+            onFocus={() => searchQuery.trim().length > 0 && setShowResults(true)}
+            onKeyDown={handleSearchKeyDown}
+          />
+          <button
+            className="navbar-search-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (!searchOpen) setSearchOpen(true);
+            }}
+          >
+            <Search size={16} />
+          </button>
