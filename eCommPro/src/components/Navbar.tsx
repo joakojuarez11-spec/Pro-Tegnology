@@ -260,3 +260,59 @@ export const Navbar = () => {
             </div>
           )}
         </div>
+
+ {/* Links desktop - categorías individuales */}
+        <Link to="/" className={`navbar-nav-link ${isActive('/')}`} onClick={() => setMenuOpen(false)}>
+          <Home size={16} /> Inicio
+        </Link>
+        <Link to="/about" className={`navbar-nav-link ${isActive('/about')}`} onClick={() => setMenuOpen(false)}>
+          <Info size={16} /> Nosotros
+        </Link>
+        {isAdmin && (
+          <Link to="/admin" className={`navbar-nav-link ${isActive('/admin')}`} onClick={() => setMenuOpen(false)}>
+            <Shield size={16} /> Admin
+          </Link>
+        )}
+        <Link to="/categoria/laptops" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/laptops')}`} onClick={() => setMenuOpen(false)}>Laptops</Link>
+        <Link to="/categoria/pc-gamer" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/pc-gamer')}`} onClick={() => setMenuOpen(false)}>PC Gamer</Link>
+        <Link to="/categoria/celulares" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/celulares')}`} onClick={() => setMenuOpen(false)}>Celulares</Link>
+        <Link to="/categoria/accesorios" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/accesorios')}`} onClick={() => setMenuOpen(false)}>Accesorios</Link>
+        <Link to="/categoria/componentes" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/componentes')}`} onClick={() => setMenuOpen(false)}>Componentes</Link>
+        <Link to="/categoria/perifericos" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/perifericos')}`} onClick={() => setMenuOpen(false)}>Periféricos</Link>
+        <Link to="/categoria/gaming" className={`navbar-nav-link navbar-cat-link ${isActive('/categoria/gaming')}`} onClick={() => setMenuOpen(false)}>Gaming</Link>
+
+        {/* Solo mobile: Categorías dropdown + otros enlaces */}
+        <div className="navbar-mobile-only">
+          <Link to="/about" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
+            <Info size={16} /> Nosotros
+          </Link>
+          {isAdmin && (
+            <Link to="/admin" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
+              <Shield size={16} /> Admin
+            </Link>
+          )}
+          <div className="navbar-cats-dropdown">
+            <button className="navbar-nav-link cats-toggle" onClick={() => setCatsOpen(!catsOpen)}>
+              Categorías {catsOpen ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
+            </button>
+            <div className={`navbar-cats-menu ${catsOpen ? 'open' : ''}`}>
+              <Link to="/categoria/laptops" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Laptops</Link>
+              <Link to="/categoria/pc-gamer" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>PC Gamer</Link>
+              <Link to="/categoria/celulares" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Celulares</Link>
+              <Link to="/categoria/accesorios" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Accesorios</Link>
+              <Link to="/categoria/componentes" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Componentes</Link>
+              <Link to="/categoria/perifericos" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Periféricos</Link>
+              <Link to="/categoria/gaming" onClick={() => { setMenuOpen(false); setCatsOpen(false); }}>Gaming</Link>
+            </div>
+          </div>
+          <Link to="/lista-de-deseos" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
+            <Heart size={16} /> Lista de deseos
+          </Link>
+          <Link to="/cuenta" className="navbar-nav-link" onClick={() => setMenuOpen(false)}>
+            <User size={16} /> Mi cuenta
+          </Link>
+        </div>
+      </nav>
+    </header>
+  );
+};
